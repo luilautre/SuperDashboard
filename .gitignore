@@ -1,0 +1,11 @@
+# Port local du dashboard
+PORT=3000
+
+# Exemple de configuration pour les services
+DISCORD_TOKEN=
+GMAIL_CLIENT_ID=
+GMAIL_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+SIGNAL_PHONE_NUMBER=
+NOTES_ENABLED=true

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuperDashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Tableau de bord</p>
+          <h1>SuperDashboard</h1>
+        </div>
+        <div class="topbar-status">
+          <span id="appStatus">Chargement…</span>
+          <small id="lastUpdated">Mise à jour…</small>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <h2>Vue d’ensemble</h2>
+          <p>
+            Un dashboard local pour centraliser Discord, Gmail, Google Calendar,
+            Signal et d’autres services.
+          </p>
+        </section>
+
+        <section id="serviceCards" class="service-grid" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
