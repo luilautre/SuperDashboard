@@ -20,7 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-session": "^1.19.0",
+    "googleapis": "^144.0.0"
   },
   "devDependencies": {
     "nodemon": "latest"
