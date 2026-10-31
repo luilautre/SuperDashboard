@@ -37,12 +37,13 @@ async function loadStatus() {
         const endpoint = service.connected ? 'disconnect' : 'connect';
         const res = await fetch(`/api/provider/${service.id}/${endpoint}`, { method: 'POST' });
         const result = await res.json();
-
+        
         if (result.ok) {
           loadStatus();
         } else {
           alert(result.error || 'Erreur inconnue');
         }
+        if (result.status === 'redirect')window.location.href = result.redirectUrl;
       });
 
       actions.appendChild(toggleBtn);

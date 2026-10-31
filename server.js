@@ -126,7 +126,7 @@ app.get('/api/health', (req, res) => {
 app.get('/auth/google', (req, res) => {
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET || !oauth2Client) {
     return res.status(500).json({
-      error: 'Google OAuth non configuré. Mets GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET dans le .env.'
+      error: 'Google OAuth non configuré. Mettre GOOGLE_CLIENT_ID et GOOGLE_CLIENT_SECRET dans le .env.'
     });
   }
 
@@ -251,6 +251,10 @@ app.post('/api/provider/:id/disconnect', (req, res) => {
     status: 'disconnected',
     message: `${service.name} a été désactivé.`
   });
+});
+
+app.get('favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
 
 app.get('*', (req, res) => {
