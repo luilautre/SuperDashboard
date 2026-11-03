@@ -1,65 +1,166 @@
-const serviceCards = document.querySelector('#serviceCards');
-const appStatus = document.querySelector('#appStatus');
-const lastUpdated = document.querySelector('#lastUpdated');
+const accountArea = document.querySelector('#accountArea');
+const welcome = document.querySelector('#welcome');
+const dashboard = document.querySelector('#dashboard');
+const loginButton = document.querySelector('#loginButton');
+const setupMessage = document.querySelector('#setupMessage');
+const firstName = document.querySelector('#firstName');
+const connectionStatus = document.querySelector('#connectionStatus');
+const footerStatus = document.querySelector('#footerStatus');
+const noteForm = document.querySelector('#noteForm');
+const noteInput = document.querySelector('#noteInput');
+const noteList = document.querySelector('#noteList');
+const noteCount = document.querySelector('#noteCount');
+const noteMessage = document.querySelector('#noteMessage');
 
-async function loadStatus() {
-  try {
-    const response = await fetch('/api/status');
-    const data = await response.json();
+async function api(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers }
+  });
+  if (!response.ok) {
+    const data = response.status === 204 ? {} : await response.json().catch(() => ({}));
+    throw new Error(data.error || `Erreur HTTP ${response.status}`);
+  }
+  return response.status === 204 ? null : response.json();
+}
 
-    appStatus.textContent = `${data.appName} • mode ${data.mode}`;
-    lastUpdated.textContent = `Mise à jour : ${new Date(data.timestamp).toLocaleString('fr-FR')}`;
+function setMessage(element, message, isError = false) {
+  element.textContent = message;
+  element.classList.toggle('error', isError);
+}
 
-    serviceCards.innerHTML = '';
+function renderAccount(user) {
+  accountArea.replaceChildren();
+  if (!user) return;
 
-    data.services.forEach((service) => {
-      const card = document.createElement('article');
-      card.className = 'service-card';
+  if (user.picture) {
+    const avatar = document.createElement('img');
+    avatar.className = 'avatar';
+    avatar.src = user.picture;
+    avatar.alt = '';
+    avatar.referrerPolicy = 'no-referrer';
+    accountArea.append(avatar);
+  }
 
-      const badge = document.createElement('span');
-      badge.className = service.connected ? 'status connected' : 'status disconnected';
-      badge.textContent = service.connected ? 'connecté' : 'déconnecté';
+  const name = document.createElement('span');
+  name.className = 'account-name';
+  name.textContent = user.name || user.email;
+  accountArea.append(name);
 
-      const title = document.createElement('h3');
-      title.textContent = service.name;
+  const logout = document.createElement('form');
+  logout.action = '/auth/logout';
+  logout.method = 'post';
+  const button = document.createElement('button');
+  button.className = 'button button-quiet';
+  button.type = 'submit';
+  button.textContent = 'Déconnexion';
+  logout.append(button);
+  accountArea.append(logout);
+}
 
-      const description = document.createElement('p');
-      description.textContent = service.description;
+function renderNotes(notes) {
+  noteList.replaceChildren();
+  noteCount.textContent = String(notes.length);
+  if (!notes.length) {
+    const empty = document.createElement('li');
+    empty.className = 'empty-state';
+    empty.textContent = 'Aucune note pour le moment. Ajoute la première !';
+    noteList.append(empty);
+    return;
+  }
 
-      const actions = document.createElement('div');
-      actions.className = 'actions';
-
-      const toggleBtn = document.createElement('button');
-      toggleBtn.textContent = service.connected ? 'Déconnecter' : 'Connecter';
-      toggleBtn.className = service.connected ? 'secondary' : 'primary';
-
-      toggleBtn.addEventListener('click', async () => {
-        const endpoint = service.connected ? 'disconnect' : 'connect';
-        const res = await fetch(`/api/provider/${service.id}/${endpoint}`, { method: 'POST' });
-        const result = await res.json();
-        
-        if (result.status === 'redirect') window.location.href = result.redirectUrl;
-
-        if (result.ok) {
-          loadStatus();
-        } else {
-          alert(result.error || 'Erreur inconnue');
-        }
-      });
-
-      actions.appendChild(toggleBtn);
-      card.appendChild(badge);
-      card.appendChild(title);
-      card.appendChild(description);
-      card.appendChild(actions);
-      serviceCards.appendChild(card);
+  for (const note of notes) {
+    const item = document.createElement('li');
+    item.className = 'note-item';
+    const text = document.createElement('span');
+    text.textContent = note.content;
+    const date = document.createElement('time');
+    date.dateTime = note.created_at;
+    date.textContent = new Date(note.created_at).toLocaleString('fr-FR', { dateStyle: 'medium', timeStyle: 'short' });
+    const remove = document.createElement('button');
+    remove.className = 'delete-note';
+    remove.type = 'button';
+    remove.textContent = 'Supprimer';
+    remove.setAttribute('aria-label', `Supprimer la note : ${note.content}`);
+    remove.addEventListener('click', async () => {
+      remove.disabled = true;
+      try {
+        await api(`/api/notes/${encodeURIComponent(note.id)}`, { method: 'DELETE' });
+        await loadNotes();
+      } catch (error) {
+        setMessage(noteMessage, error.message, true);
+        remove.disabled = false;
+      }
     });
-  } catch (error) {
-    appStatus.textContent = 'Erreur de chargement du dashboard';
-    lastUpdated.textContent = 'Vérifie le serveur local';
-    console.error(error);
+    const meta = document.createElement('div');
+    meta.className = 'note-meta';
+    meta.append(date, remove);
+    item.append(text, meta);
+    noteList.append(item);
   }
 }
 
-loadStatus();
-setInterval(loadStatus, 10000);
+async function loadNotes() {
+  const { notes } = await api('/api/notes');
+  renderNotes(notes);
+}
+
+async function initialize() {
+  try {
+    const config = await api('/api/config');
+    renderAccount(config.user);
+    footerStatus.textContent = config.databaseConfigured ? 'Base connectée' : 'Base non configurée';
+
+    if (!config.loggedIn) {
+      welcome.hidden = false;
+      dashboard.hidden = true;
+      loginButton.disabled = !config.googleConfigured;
+      if (!config.googleConfigured || !config.databaseConfigured) {
+        setupMessage.hidden = false;
+        setupMessage.textContent = 'Configuration incomplète : vérifie GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY dans .env.';
+      }
+      return;
+    }
+
+    welcome.hidden = true;
+    dashboard.hidden = false;
+    const givenName = (config.user.name || '').trim().split(/\s+/)[0];
+    firstName.textContent = givenName ? ` ${givenName}` : '';
+    connectionStatus.textContent = config.databaseConfigured ? '● Enregistré dans Supabase' : '● Supabase non configuré';
+    if (!config.databaseConfigured) {
+      noteForm.hidden = true;
+      setMessage(noteMessage, 'Configure Supabase et exécute supabase/schema.sql pour enregistrer des notes.', true);
+      return;
+    }
+    await loadNotes();
+  } catch (error) {
+    setMessage(setupMessage, error.message, true);
+    setupMessage.hidden = false;
+  }
+}
+
+loginButton.addEventListener('click', () => {
+  window.location.assign('/auth/google');
+});
+
+noteForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const content = noteInput.value.trim();
+  if (!content) return;
+
+  const submitButton = noteForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  setMessage(noteMessage, 'Enregistrement…');
+  try {
+    await api('/api/notes', { method: 'POST', body: JSON.stringify({ content }) });
+    noteInput.value = '';
+    setMessage(noteMessage, 'Note enregistrée.');
+    await loadNotes();
+  } catch (error) {
+    setMessage(noteMessage, error.message, true);
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+initialize();
