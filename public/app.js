@@ -3,14 +3,50 @@ const welcome = document.querySelector('#welcome');
 const dashboard = document.querySelector('#dashboard');
 const loginButton = document.querySelector('#loginButton');
 const setupMessage = document.querySelector('#setupMessage');
-const firstName = document.querySelector('#firstName');
+const activeAppName = document.querySelector('#activeAppName');
+const appAvatar = document.querySelector('#appAvatar');
 const connectionStatus = document.querySelector('#connectionStatus');
-const footerStatus = document.querySelector('#footerStatus');
+const headerCount = document.querySelector('#headerCount');
 const noteForm = document.querySelector('#noteForm');
 const noteInput = document.querySelector('#noteInput');
 const noteList = document.querySelector('#noteList');
 const noteCount = document.querySelector('#noteCount');
 const noteMessage = document.querySelector('#noteMessage');
+const integrationPanel = document.querySelector('#integrationPanel');
+const integrationIcon = document.querySelector('#integrationIcon');
+const integrationTitle = document.querySelector('#integrationTitle');
+const integrationDescription = document.querySelector('#integrationDescription');
+const integrationStatus = document.querySelector('#integrationStatus');
+const integrationDetails = document.querySelector('#integrationDetails');
+const notesPanel = document.querySelector('#notesPanel');
+const tabs = [...document.querySelectorAll('[data-app]')];
+
+const applications = {
+  discord: {
+    name: 'Discord', icon: '◉',
+    description: 'Messages et notifications de tes serveurs Discord.',
+    details: 'L’onglet est prêt côté interface. La connexion à Discord (bot ou OAuth) n’est pas encore implémentée.'
+  },
+  gmail: {
+    name: 'Gmail', icon: '✉',
+    description: 'Ta boîte de réception et tes messages importants.',
+    details: 'La connexion Google utilisée pour ouvrir le dashboard ne donne pas accès à Gmail. L’API Gmail et les autorisations OAuth restent à ajouter.'
+  },
+  calendar: {
+    name: 'Google Calendar', icon: '▦',
+    description: 'Ton agenda et tes prochains événements.',
+    details: 'L’API Google Calendar et les autorisations OAuth correspondantes restent à ajouter.'
+  },
+  signal: {
+    name: 'Signal', icon: '◌',
+    description: 'Un espace prévu pour Signal.',
+    details: 'Signal ne propose pas d’API publique officielle générale pour ce type d’intégration. Cet onglet est donc un emplacement, pas une connexion active.'
+  },
+  notes: {
+    name: 'Notes', icon: '▤',
+    description: 'Tes notes personnelles enregistrées dans Supabase.'
+  }
+};
 
 async function api(url, options = {}) {
   const response = await fetch(url, {
@@ -18,7 +54,7 @@ async function api(url, options = {}) {
     headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers }
   });
   if (!response.ok) {
-    const data = response.status === 204 ? {} : await response.json().catch(() => ({}));
+    const data = await response.json().catch(() => ({}));
     throw new Error(data.error || `Erreur HTTP ${response.status}`);
   }
   return response.status === 204 ? null : response.json();
@@ -105,11 +141,43 @@ async function loadNotes() {
   renderNotes(notes);
 }
 
+function selectApplication(id) {
+  const application = applications[id];
+  if (!application) return;
+
+  for (const tab of tabs) {
+    const selected = tab.dataset.app === id;
+    tab.classList.toggle('active', selected);
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  }
+
+  activeAppName.textContent = application.name;
+  appAvatar.textContent = application.icon;
+  document.querySelector('#appView').setAttribute('aria-labelledby', `tab-${id}`);
+  const isNotes = id === 'notes';
+  integrationPanel.hidden = isNotes;
+  notesPanel.hidden = !isNotes;
+  headerCount.hidden = !isNotes;
+
+  if (isNotes) {
+    connectionStatus.textContent = 'Enregistrées dans Supabase';
+    loadNotes().catch((error) => setMessage(noteMessage, error.message, true));
+    return;
+  }
+
+  connectionStatus.textContent = 'Intégration non connectée';
+  integrationIcon.textContent = application.icon;
+  integrationTitle.textContent = application.name;
+  integrationDescription.textContent = application.description;
+  integrationDetails.textContent = application.details;
+  integrationStatus.textContent = 'À intégrer';
+}
+
 async function initialize() {
   try {
     const config = await api('/api/config');
     renderAccount(config.user);
-    footerStatus.textContent = config.databaseConfigured ? 'Base connectée' : 'Base non configurée';
 
     if (!config.loggedIn) {
       welcome.hidden = false;
@@ -124,24 +192,29 @@ async function initialize() {
 
     welcome.hidden = true;
     dashboard.hidden = false;
-    const givenName = (config.user.name || '').trim().split(/\s+/)[0];
-    firstName.textContent = givenName ? ` ${givenName}` : '';
-    connectionStatus.textContent = config.databaseConfigured ? '● Enregistré dans Supabase' : '● Supabase non configuré';
-    if (!config.databaseConfigured) {
-      noteForm.hidden = true;
-      setMessage(noteMessage, 'Configure Supabase et exécute supabase/schema.sql pour enregistrer des notes.', true);
-      return;
-    }
-    await loadNotes();
+    selectApplication('discord');
   } catch (error) {
     setMessage(setupMessage, error.message, true);
     setupMessage.hidden = false;
   }
 }
 
-loginButton.addEventListener('click', () => {
-  window.location.assign('/auth/google');
+tabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => selectApplication(tab.dataset.app));
+  tab.addEventListener('keydown', (event) => {
+    if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    let nextIndex = index;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+    if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = tabs.length - 1;
+    tabs[nextIndex].focus();
+    selectApplication(tabs[nextIndex].dataset.app);
+  });
 });
+
+loginButton.addEventListener('click', () => window.location.assign('/auth/google'));
 
 noteForm.addEventListener('submit', async (event) => {
   event.preventDefault();
