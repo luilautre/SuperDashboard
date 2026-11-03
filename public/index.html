@@ -10,83 +10,24 @@
   <body>
     <div class="app-layout">
       <aside class="sidebar" aria-label="Navigation principale">
-        <a class="brand" href="/" aria-label="SuperDashboard, accueil">
-          <span class="brand-mark" aria-hidden="true">S</span>
-          <span>SuperDashboard</span>
-        </a>
+        <a class="brand" href="/" aria-label="SuperDashboard, accueil"><span class="brand-mark" aria-hidden="true">S</span><span>SuperDashboard</span></a>
         <p class="nav-label">APPLICATIONS</p>
         <nav class="side-nav" aria-label="Applications" role="tablist">
-          <button class="nav-item active" type="button" role="tab" id="tab-discord" aria-selected="true" aria-controls="appView" data-app="discord">
-            <span class="nav-icon" aria-hidden="true">◉</span><span>Discord</span>
-          </button>
-          <button class="nav-item" type="button" role="tab" id="tab-gmail" aria-selected="false" aria-controls="appView" data-app="gmail" tabindex="-1">
-            <span class="nav-icon" aria-hidden="true">✉</span><span>Gmail</span>
-          </button>
-          <button class="nav-item" type="button" role="tab" id="tab-calendar" aria-selected="false" aria-controls="appView" data-app="calendar" tabindex="-1">
-            <span class="nav-icon" aria-hidden="true">▦</span><span>Google Calendar</span>
-          </button>
-          <button class="nav-item" type="button" role="tab" id="tab-signal" aria-selected="false" aria-controls="appView" data-app="signal" tabindex="-1">
-            <span class="nav-icon" aria-hidden="true">◌</span><span>Signal</span>
-          </button>
-          <button class="nav-item" type="button" role="tab" id="tab-notes" aria-selected="false" aria-controls="appView" data-app="notes" tabindex="-1">
-            <span class="nav-icon" aria-hidden="true">▤</span><span>Notes</span>
-          </button>
+          <button class="nav-item active" type="button" role="tab" id="tab-discord" aria-selected="true" aria-controls="appView" data-app="discord"><span class="nav-icon" aria-hidden="true">◉</span><span>Discord</span></button>
+          <button class="nav-item" type="button" role="tab" id="tab-gmail" aria-selected="false" aria-controls="appView" data-app="gmail" tabindex="-1"><span class="nav-icon" aria-hidden="true">✉</span><span>Gmail</span></button>
+          <button class="nav-item" type="button" role="tab" id="tab-calendar" aria-selected="false" aria-controls="appView" data-app="calendar" tabindex="-1"><span class="nav-icon" aria-hidden="true">▦</span><span>Google Calendar</span></button>
+          <button class="nav-item" type="button" role="tab" id="tab-signal" aria-selected="false" aria-controls="appView" data-app="signal" tabindex="-1"><span class="nav-icon" aria-hidden="true">◌</span><span>Signal</span></button>
+          <button class="nav-item" type="button" role="tab" id="tab-notes" aria-selected="false" aria-controls="appView" data-app="notes" tabindex="-1"><span class="nav-icon" aria-hidden="true">▤</span><span>Notes</span></button>
         </nav>
-        <div class="sidebar-bottom">
-          <div id="accountArea" class="account-area" aria-live="polite"></div>
-          <div class="sidebar-caption">Express <span>·</span> Supabase</div>
-        </div>
+        <div class="sidebar-bottom"><div id="accountArea" class="account-area" aria-live="polite"></div><div class="sidebar-caption">Express <span>·</span> Supabase</div></div>
       </aside>
-
       <main class="workspace">
-        <section id="welcome" class="welcome" aria-labelledby="welcomeTitle">
-          <div class="welcome-card">
-            <div class="welcome-mark" aria-hidden="true">S</div>
-            <p class="eyebrow">Ton espace personnel</p>
-            <h1 id="welcomeTitle">Toutes tes applications,<br />au même endroit.</h1>
-            <p class="intro">Connecte-toi avec Google pour ouvrir ton dashboard. Choisis ensuite Discord, Gmail, Google Calendar, Signal ou Notes dans le menu.</p>
-            <button id="loginButton" class="button button-google" type="button">
-              <span class="google-mark" aria-hidden="true">G</span>
-              Continuer avec Google
-            </button>
-            <p id="setupMessage" class="hint" hidden></p>
-          </div>
-        </section>
-
+        <section id="welcome" class="welcome" aria-labelledby="welcomeTitle"><div class="welcome-card"><div class="welcome-mark" aria-hidden="true">S</div><p class="eyebrow">Ton espace personnel</p><h1 id="welcomeTitle">Toutes tes applications,<br />au même endroit.</h1><p class="intro">Connecte-toi avec Google pour ouvrir ton dashboard et autoriser l’accès en lecture à Gmail et Calendar.</p><button id="loginButton" class="button button-google" type="button"><span class="google-mark" aria-hidden="true">G</span>Continuer avec Google</button><p id="setupMessage" class="hint" hidden></p></div></section>
         <section id="dashboard" class="dashboard" hidden>
-          <header class="chat-header">
-            <div id="appAvatar" class="chat-avatar" aria-hidden="true">◉</div>
-            <div class="chat-title">
-              <h1 id="activeAppName">Discord</h1>
-              <span id="connectionStatus" class="connection-status"></span>
-            </div>
-            <span id="headerCount" class="header-count" hidden><span id="noteCount">0</span> notes</span>
-          </header>
-
+          <header class="chat-header"><div id="appAvatar" class="chat-avatar" aria-hidden="true">◉</div><div class="chat-title"><h1 id="activeAppName">Discord</h1><span id="connectionStatus" class="connection-status"></span></div><span id="headerCount" class="header-count" hidden><span id="noteCount">0</span> notes</span></header>
           <section id="appView" class="app-view" role="tabpanel" aria-labelledby="tab-discord">
-            <section id="integrationPanel" class="integration-panel">
-              <div id="integrationIcon" class="integration-icon" aria-hidden="true">◉</div>
-              <p class="eyebrow">APPLICATION</p>
-              <h2 id="integrationTitle">Discord</h2>
-              <p id="integrationDescription" class="integration-description"></p>
-              <span id="integrationStatus" class="integration-status">Intégration à configurer</span>
-              <p id="integrationDetails" class="integration-details"></p>
-            </section>
-
-            <section id="notesPanel" class="notes-panel" aria-label="Mes notes" hidden>
-              <div class="chat-intro">
-                <span class="chat-intro-icon" aria-hidden="true">✦</span>
-                <p><strong>Ton espace de notes</strong><br />Tes idées, accessibles partout où tu te connectes.</p>
-              </div>
-              <ul id="noteList" class="note-list" aria-live="polite"></ul>
-              <p id="noteMessage" class="hint" aria-live="polite"></p>
-              <form id="noteForm" class="note-form">
-                <label class="visually-hidden" for="noteInput">Nouvelle note</label>
-                <input id="noteInput" name="content" maxlength="500" placeholder="Écris une note…" autocomplete="off" required />
-                <button class="button button-primary" type="submit" aria-label="Ajouter la note"><span aria-hidden="true">↑</span></button>
-              </form>
-              <p class="composer-caption">Tes notes restent privées à ton compte.</p>
-            </section>
+            <section id="integrationPanel" class="integration-panel"><div id="integrationIcon" class="integration-icon" aria-hidden="true">◉</div><p class="eyebrow">APPLICATION</p><h2 id="integrationTitle">Discord</h2><p id="integrationDescription" class="integration-description"></p><span id="integrationStatus" class="integration-status">Connexion requise</span><p id="integrationDetails" class="integration-details"></p><button id="integrationAction" class="button button-primary integration-action" type="button" hidden></button><div id="integrationResults" class="integration-results" aria-live="polite"></div></section>
+            <section id="notesPanel" class="notes-panel" aria-label="Mes notes" hidden><div class="chat-intro"><span class="chat-intro-icon" aria-hidden="true">✦</span><p><strong>Ton espace de notes</strong><br />Tes idées, accessibles partout où tu te connectes.</p></div><ul id="noteList" class="note-list" aria-live="polite"></ul><p id="noteMessage" class="hint" aria-live="polite"></p><form id="noteForm" class="note-form"><label class="visually-hidden" for="noteInput">Nouvelle note</label><input id="noteInput" name="content" maxlength="500" placeholder="Écris une note…" autocomplete="off" required /><button class="button button-primary" type="submit" aria-label="Ajouter la note"><span aria-hidden="true">↑</span></button></form><p class="composer-caption">Tes notes restent privées à ton compte.</p></section>
           </section>
         </section>
       </main>
