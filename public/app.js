@@ -38,12 +38,13 @@ async function loadStatus() {
         const res = await fetch(`/api/provider/${service.id}/${endpoint}`, { method: 'POST' });
         const result = await res.json();
         
+        if (result.status === 'redirect') window.location.href = result.redirectUrl;
+
         if (result.ok) {
           loadStatus();
         } else {
           alert(result.error || 'Erreur inconnue');
         }
-        if (result.status === 'redirect')window.location.href = result.redirectUrl;
       });
 
       actions.appendChild(toggleBtn);

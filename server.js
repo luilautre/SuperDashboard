@@ -253,7 +253,7 @@ app.post('/api/provider/:id/disconnect', (req, res) => {
   });
 });
 
-app.get('favicon.ico', (req, res) => {
+app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
 });
 
