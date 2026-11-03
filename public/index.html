@@ -3,59 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#10131c" />
+    <meta name="theme-color" content="#212121" />
     <title>SuperDashboard</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <main class="page-shell">
-      <header class="topbar">
+    <div class="app-layout">
+      <aside class="sidebar" aria-label="Navigation principale">
         <a class="brand" href="/" aria-label="SuperDashboard, accueil">
-          <span class="brand-mark">S</span>
+          <span class="brand-mark" aria-hidden="true">S</span>
           <span>SuperDashboard</span>
         </a>
-        <div id="accountArea" class="account-area" aria-live="polite"></div>
-      </header>
-
-      <section id="welcome" class="welcome panel">
-        <p class="eyebrow">Ton espace, au même endroit</p>
-        <h1>Un dashboard à toi.</h1>
-        <p class="intro">Connecte-toi avec Google pour retrouver tes notes sur tes appareils. Tes données sont enregistrées dans ta base Supabase.</p>
-        <button id="loginButton" class="button button-google" type="button">
-          <span class="google-mark" aria-hidden="true">G</span>
-          Continuer avec Google
-        </button>
-        <p id="setupMessage" class="hint" hidden></p>
-      </section>
-
-      <section id="dashboard" class="dashboard" hidden>
-        <div class="dashboard-heading">
-          <div>
-            <p class="eyebrow">Ton espace personnel</p>
-            <h1>Bonjour<span id="firstName"></span> 👋</h1>
-          </div>
-          <div id="connectionStatus" class="connection-status"></div>
+        <nav class="side-nav" aria-label="Espaces">
+          <a class="nav-item active" href="/" aria-current="page">
+            <span class="nav-icon" aria-hidden="true">▤</span>
+            <span>Mes notes</span>
+          </a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div id="accountArea" class="account-area" aria-live="polite"></div>
+          <div class="sidebar-caption">Express <span>·</span> Supabase</div>
         </div>
+      </aside>
 
-        <section class="panel notes-panel">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Espace privé</p>
-              <h2>Mes notes</h2>
-            </div>
-            <span id="noteCount" class="note-count">0</span>
+      <main class="workspace">
+        <section id="welcome" class="welcome" aria-labelledby="welcomeTitle">
+          <div class="welcome-card">
+            <div class="welcome-mark" aria-hidden="true">S</div>
+            <p class="eyebrow">Ton espace personnel</p>
+            <h1 id="welcomeTitle">Tout ce qui compte,<br />au même endroit.</h1>
+            <p class="intro">Connecte-toi avec Google pour retrouver tes notes sur tes appareils. Elles sont enregistrées dans ta base Supabase.</p>
+            <button id="loginButton" class="button button-google" type="button">
+              <span class="google-mark" aria-hidden="true">G</span>
+              Continuer avec Google
+            </button>
+            <p id="setupMessage" class="hint" hidden></p>
           </div>
-          <form id="noteForm" class="note-form">
-            <label class="visually-hidden" for="noteInput">Nouvelle note</label>
-            <input id="noteInput" name="content" maxlength="500" placeholder="Écris une note…" autocomplete="off" required />
-            <button class="button button-primary" type="submit">Ajouter</button>
-          </form>
-          <p id="noteMessage" class="hint" aria-live="polite"></p>
-          <ul id="noteList" class="note-list" aria-live="polite"></ul>
         </section>
-      </section>
-      <footer><span>Express · Google OAuth · Supabase</span><span id="footerStatus"></span></footer>
-    </main>
+
+        <section id="dashboard" class="dashboard" hidden>
+          <header class="chat-header">
+            <div class="chat-avatar" aria-hidden="true">✎</div>
+            <div class="chat-title">
+              <h1>Mes notes</h1>
+              <span id="connectionStatus" class="connection-status"></span>
+            </div>
+            <span class="header-count"><span id="noteCount">0</span> notes</span>
+          </header>
+
+          <section class="notes-panel" aria-label="Conversation de notes">
+            <div class="chat-intro">
+              <span class="chat-intro-icon" aria-hidden="true">✦</span>
+              <p><strong>Ton espace de notes</strong><br />Tes idées, accessibles partout où tu te connectes.</p>
+            </div>
+            <ul id="noteList" class="note-list" aria-live="polite"></ul>
+            <p id="noteMessage" class="hint" aria-live="polite"></p>
+            <form id="noteForm" class="note-form">
+              <label class="visually-hidden" for="noteInput">Nouvelle note</label>
+              <input id="noteInput" name="content" maxlength="500" placeholder="Écris un message…" autocomplete="off" required />
+              <button class="button button-primary" type="submit" aria-label="Ajouter la note">
+                <span class="send-label">Envoyer</span>
+                <span class="send-icon" aria-hidden="true">↑</span>
+              </button>
+            </form>
+            <p class="composer-caption">Tes notes restent privées à ton compte.</p>
+          </section>
+        </section>
+        <footer class="mobile-footer"><span id="footerStatus"></span></footer>
+      </main>
+    </div>
     <script src="/app.js" defer></script>
   </body>
 </html>
