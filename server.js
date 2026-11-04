@@ -7,7 +7,6 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
-const NODE_ENV = process.env.NODE_ENV || 'production'
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const BASE_URL = (process.env.BASE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
@@ -39,9 +38,10 @@ function createGoogleClient() {
 }
 
 function requireLogin(req, res, next) {
-  if (NODE_ENV==='development') next();
-  if (!req.session.user) return res.status(401).json({ error: 'Connecte-toi avec Google pour continuer.' });
-  next();
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Connecte-toi avec Google pour continuer.' });
+  }
+  return next();
 }
 
 function requireSupabase(res) {
@@ -53,10 +53,10 @@ function requireSupabase(res) {
 function getGoogleApiClient(req, res) {
   const tokens = req.session.googleTokens;
   if (!tokens || (!tokens.access_token && !tokens.refresh_token)) {
-    if (NODE_ENV==='development') res.status(401).json({ error: 'Autorisation Gmail et Calendar absente (En development). Clique sur « Autoriser Google ».' });
-    res.status(401).json({ error: 'Autorisation Gmail et Calendar absente. Clique sur « Autoriser Google ».'});
+    res.status(401).json({ error: 'Autorisation Gmail et Calendar absente. Clique sur « Autoriser Google ».' });
     return null;
   }
+
   const client = createGoogleClient();
   client.setCredentials(tokens);
   client.on('tokens', (updatedTokens) => {
@@ -126,14 +126,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/config', (req, res) => {
   res.json({
-    loggedIn: NODE_ENV==='development' ? true : Boolean(req.session.user),
-    user: NODE_ENV==='development' ? "fakeToken" : req.session.user || null,
+    loggedIn: Boolean(req.session.user),
+    user: req.session.user || null,
     googleConfigured: hasGoogleConfig,
-    googleAuthorized: NODE_ENV==='development' ? true : Boolean(req.session.googleTokens),
+    googleAuthorized: Boolean(req.session.googleTokens),
     discordConfigured: hasDiscordConfig,
     discordAuthorized: Boolean(req.session.discordTokens),
-    databaseConfigured: NODE_ENV==='development' ? true : hasSupabaseConfig,
-    databaseReallyConfigured: hasSupabaseConfig
+    databaseConfigured: hasSupabaseConfig
   });
 });
 
@@ -224,7 +223,6 @@ app.get('/auth/discord/callback', async (req, res, next) => {
 });
 
 app.get('/api/google/gmail', requireLogin, async (req, res, next) => {
-  if (NODE_ENV==='development') res.status(503).json({ error: "En 'development' les services google ne sont pas disponibles" }); return;
   const auth = getGoogleApiClient(req, res);
   if (!auth) return;
   try {
@@ -243,7 +241,6 @@ app.get('/api/google/gmail', requireLogin, async (req, res, next) => {
 });
 
 app.get('/api/google/calendar', requireLogin, async (req, res, next) => {
-  if (NODE_ENV==='development') res.status(503).json({ error: "En 'development' les services google ne sont pas disponibles" }); return;
   const auth = getGoogleApiClient(req, res);
   if (!auth) return;
   try {
@@ -298,22 +295,21 @@ app.get('/api/notes', requireLogin, async (req, res, next) => {
     const googleId = encodeURIComponent(req.session.user.google_id);
     const notes = await supabaseRequest('notes', `?google_id=eq.${googleId}&select=id,content,created_at&order=created_at.desc`);
     return res.json({ notes });
-  } catch (error) { return next(error); }
+  } catch (error) {
+    return next(error);
+  }
 });
 
 app.post('/api/notes', requireLogin, async (req, res, next) => {
-  console.error(NODE_ENV)
-  if (NODE_ENV==='development') {
-    res.status(503).json({ error: "En 'development' les notes ne sont pas disponibles" });
-    return next()
-  };
   if (!requireSupabase(res)) return;
   const content = typeof req.body.content === 'string' ? req.body.content.trim() : '';
   if (!content || content.length > 500) return res.status(400).json({ error: 'La note doit contenir entre 1 et 500 caractères.' });
   try {
     const [note] = await supabaseRequest('notes', '', { method: 'POST', body: { google_id: req.session.user.google_id, content } });
     return res.status(201).json({ note });
-  } catch (error) { return next(error); }
+  } catch (error) {
+    return next(error);
+  }
 });
 
 app.delete('/api/notes/:id', requireLogin, async (req, res, next) => {
@@ -324,7 +320,9 @@ app.delete('/api/notes/:id', requireLogin, async (req, res, next) => {
     const googleId = encodeURIComponent(req.session.user.google_id);
     await supabaseRequest('notes', `?id=eq.${id}&google_id=eq.${googleId}`, { method: 'DELETE', prefer: 'return=minimal' });
     return res.status(204).end();
-  } catch (error) { return next(error); }
+  } catch (error) {
+    return next(error);
+  }
 });
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
