@@ -7,6 +7,7 @@ const { google } = require('googleapis');
 
 dotenv.config();
 
+const NODE_ENV = process.env.NODE_ENV || 'production'
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const BASE_URL = (process.env.BASE_URL || `http://localhost:${PORT}`).replace(/\/$/, '');
@@ -38,6 +39,7 @@ function createGoogleClient() {
 }
 
 function requireLogin(req, res, next) {
+  if (NODE_ENV==='development') next();
   if (!req.session.user) return res.status(401).json({ error: 'Connecte-toi avec Google pour continuer.' });
   next();
 }
@@ -51,7 +53,8 @@ function requireSupabase(res) {
 function getGoogleApiClient(req, res) {
   const tokens = req.session.googleTokens;
   if (!tokens || (!tokens.access_token && !tokens.refresh_token)) {
-    res.status(401).json({ error: 'Autorisation Gmail et Calendar absente. Clique sur « Autoriser Google ».' });
+    if (NODE_ENV==='development') res.status(401).json({ error: 'Autorisation Gmail et Calendar absente (En development). Clique sur « Autoriser Google ».' });
+    res.status(401).json({ error: 'Autorisation Gmail et Calendar absente. Clique sur « Autoriser Google ».'});
     return null;
   }
   const client = createGoogleClient();
@@ -123,13 +126,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/config', (req, res) => {
   res.json({
-    loggedIn: Boolean(req.session.user),
-    user: req.session.user || null,
+    loggedIn: NODE_ENV==='development' ? true : Boolean(req.session.user),
+    user: NODE_ENV==='development' ? "fakeToken" : req.session.user || null,
     googleConfigured: hasGoogleConfig,
-    googleAuthorized: Boolean(req.session.googleTokens),
+    googleAuthorized: NODE_ENV==='development' ? true : Boolean(req.session.googleTokens),
     discordConfigured: hasDiscordConfig,
     discordAuthorized: Boolean(req.session.discordTokens),
-    databaseConfigured: hasSupabaseConfig
+    databaseConfigured: NODE_ENV==='development' ? true : hasSupabaseConfig,
+    databaseReallyConfigured: hasSupabaseConfig
   });
 });
 
@@ -220,6 +224,7 @@ app.get('/auth/discord/callback', async (req, res, next) => {
 });
 
 app.get('/api/google/gmail', requireLogin, async (req, res, next) => {
+  if (NODE_ENV==='development') res.status(503).json({ error: "En 'development' les services google ne sont pas disponibles" }); return;
   const auth = getGoogleApiClient(req, res);
   if (!auth) return;
   try {
@@ -238,6 +243,7 @@ app.get('/api/google/gmail', requireLogin, async (req, res, next) => {
 });
 
 app.get('/api/google/calendar', requireLogin, async (req, res, next) => {
+  if (NODE_ENV==='development') res.status(503).json({ error: "En 'development' les services google ne sont pas disponibles" }); return;
   const auth = getGoogleApiClient(req, res);
   if (!auth) return;
   try {
@@ -296,6 +302,11 @@ app.get('/api/notes', requireLogin, async (req, res, next) => {
 });
 
 app.post('/api/notes', requireLogin, async (req, res, next) => {
+  console.error(NODE_ENV)
+  if (NODE_ENV==='development') {
+    res.status(503).json({ error: "En 'development' les notes ne sont pas disponibles" });
+    return next()
+  };
   if (!requireSupabase(res)) return;
   const content = typeof req.body.content === 'string' ? req.body.content.trim() : '';
   if (!content || content.length > 500) return res.status(400).json({ error: 'La note doit contenir entre 1 et 500 caractères.' });
