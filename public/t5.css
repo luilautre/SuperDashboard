@@ -59,3 +59,12 @@ body, .workspace { background: #fff1e8; color: var(--text); }
   .result-item:nth-child(even) { transform: none; }
   .note-item { background: #f8d4c3; color: #402923; }
 }
+
+/* Contraste de la navigation non sélectionnée. */
+.nav-item { color: #704f44; }
+.nav-icon { color: #8d6e63; }
+
+@media (max-width: 720px) {
+  .nav-item { color: #704f44; }
+  .nav-icon { color: #8d6e63; }
+}

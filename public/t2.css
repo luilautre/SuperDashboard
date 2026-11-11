@@ -58,3 +58,12 @@ body, .workspace { background: #f2effa; color: var(--text); }
   .integration-description { color: #554c67; }
   .chat-intro { background: #eee7f8; }
 }
+
+/* Contraste de la navigation non sélectionnée. */
+.nav-item { color: #51466a; }
+.nav-icon { color: #746b86; }
+
+@media (max-width: 720px) {
+  .nav-item { color: #51466a; }
+  .nav-icon { color: #746b86; }
+}
