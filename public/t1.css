@@ -1,0 +1,42 @@
+/* Thème 1 — Minuit turquoise. À charger après /styles.css. */
+:root {
+  color-scheme: dark;
+  --app: #101b20;
+  --sidebar: #0a1418;
+  --sidebar-hover: #18343a;
+  --surface: #17272d;
+  --surface-raised: #20343b;
+  --surface-user: #174e4b;
+  --text: #e6f4f2;
+  --muted: #9ab8b4;
+  --line: #b6e9df20;
+  --accent: #70e0cb;
+  --accent-strong: #4bc8b2;
+  --danger: #ff958d;
+}
+
+.chat-header { background: rgb(16 27 32 / 92%); }
+.integration-panel, .chat-intro { background: #17272d; }
+.integration-icon, .chat-avatar, .chat-intro-icon { background: #20474a; color: #b8fff0; }
+.result-item { background: #111f24; color: #e6f4f2; }
+.note-form { background: #17272d; }
+.note-item { color: #e6f4f2; }
+.button-primary { color: #08251f; }
+
+@media (max-width: 720px) {
+  :root { --app: #e3f0ec; --text: #17352f; --muted: #647d76; --line: #17352f1c; }
+  body, .workspace { background: #e3f0ec; }
+  .sidebar, .chat-header { background: #075e54; }
+  .side-nav { background: #f7fbf8; }
+  .nav-item { color: #617870; }
+  .nav-item:hover, .nav-item.active { color: #075e54; }
+  .app-view { background-color: #e3f0ec; }
+  .integration-panel, .result-item { background: #f8fcf9; color: #17352f; }
+  .integration-panel h2 { color: #17352f; }
+  .integration-description { color: #4e675f; }
+  .integration-status { background: #d7eee5; color: #185b47; }
+  .chat-intro { background: #d5eee3; color: #587168; }
+  .chat-intro strong { color: #244b40; }
+  .note-form { background: #f8fcf9; }
+  .note-item { background: #d3ebe2; color: #17352f; }
+}

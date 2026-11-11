@@ -1,0 +1,48 @@
+/* Thème 2 — Lavande claire. À charger après /styles.css. */
+:root {
+  color-scheme: light;
+  --app: #f2effa;
+  --sidebar: #e6e0f3;
+  --sidebar-hover: #d9d0eb;
+  --surface: #fffaff;
+  --surface-raised: #f5effb;
+  --surface-user: #e8ddfa;
+  --text: #29233a;
+  --muted: #746b86;
+  --line: #45365a1c;
+  --accent: #7654bd;
+  --accent-strong: #6342a8;
+  --danger: #b8324a;
+}
+
+body, .workspace { background: var(--app); color: var(--text); }
+.brand, .nav-item, .account-area, .chat-title h1 { color: var(--text); }
+.nav-item:hover, .nav-item.active { background: var(--sidebar-hover); color: #38275e; }
+.nav-icon, .connection-status, .integration-details, .result-item span { color: var(--muted); }
+.chat-header { background: rgb(242 239 250 / 92%); }
+.integration-panel, .chat-intro, .note-form { background: var(--surface); color: var(--text); }
+.integration-icon, .chat-avatar, .chat-intro-icon { background: #e6dcf8; color: #6342a8; }
+.integration-panel h2, .chat-intro strong { color: var(--text); }
+.integration-description { color: #554c67; }
+.integration-status { border-color: #d8cde9; background: #eee8f8; color: #594580; }
+.result-item { border-color: var(--line); background: #fffaff; color: var(--text); }
+.result-item[href]:hover { border-color: #b9a8da; background: #f6f0ff; }
+.note-item { border-color: #d8cbed; background: var(--surface-user); color: #29233a; }
+.note-meta, .delete-note { color: #62527f; }
+.button-primary { color: #fff; }
+.empty-state, .results-empty { color: var(--muted); }
+
+@media (max-width: 720px) {
+  :root { --app: #f2effa; --text: #29233a; --muted: #746b86; --line: #45365a1c; }
+  body, .workspace, .app-view { background-color: #f2effa; }
+  .sidebar, .chat-header { background: #60449a; }
+  .side-nav { background: #fffaff; }
+  .nav-item { color: #746b86; }
+  .nav-item:hover, .nav-item.active { color: #60449a; }
+  .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
+  .integration-panel, .result-item { background: #fffaff; }
+  .chat-intro { background: #eee7f8; color: #746b86; }
+  .chat-intro strong { color: #29233a; }
+  .note-form { background: #fffaff; }
+  .note-item { background: #e8ddfa; color: #29233a; }
+}

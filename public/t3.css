@@ -1,0 +1,45 @@
+/* Thème 3 — Forêt profonde. À charger après /styles.css. */
+:root {
+  color-scheme: dark;
+  --app: #142019;
+  --sidebar: #0d1711;
+  --sidebar-hover: #203729;
+  --surface: #1d2c22;
+  --surface-raised: #26392b;
+  --surface-user: #31563a;
+  --text: #edf5e9;
+  --muted: #a4b49f;
+  --line: #d6efcf1c;
+  --accent: #b3dc7a;
+  --accent-strong: #95c65a;
+  --danger: #ff9588;
+}
+
+.chat-header { background: rgb(20 32 25 / 92%); }
+.integration-panel, .chat-intro, .note-form { background: #1d2c22; }
+.integration-icon, .chat-avatar, .chat-intro-icon { background: #304837; color: #d7efb2; }
+.integration-description { color: #c2cfba; }
+.integration-status { border-color: #d6efcf1c; background: #ffffff08; color: #d0ddc8; }
+.result-item { background: #142019; color: #edf5e9; }
+.result-item span, .integration-details { color: #a4b49f; }
+.note-item { background: #31563a; color: #f1f7ed; }
+.note-meta, .delete-note { color: #d2e3ca; }
+.button-primary { color: #1c2b13; }
+
+@media (max-width: 720px) {
+  :root { --app: #e7eee2; --text: #263a2a; --muted: #71816e; --line: #263a2a1c; }
+  body, .workspace, .app-view { background-color: #e7eee2; }
+  .sidebar, .chat-header { background: #315a3b; }
+  .side-nav { background: #f8faf5; }
+  .nav-item { color: #71816e; }
+  .nav-item:hover, .nav-item.active { color: #315a3b; }
+  .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
+  .integration-panel, .result-item, .note-form { background: #f8faf5; }
+  .integration-panel h2 { color: #263a2a; }
+  .integration-description, .integration-details { color: #52654e; }
+  .integration-status { background: #e2edd9; color: #315a3b; }
+  .chat-intro { background: #e9efd9; color: #68735b; }
+  .chat-intro strong { color: #36452e; }
+  .note-item { background: #d8e8ce; color: #263a2a; }
+  .note-meta, .delete-note { color: #52654e; }
+}
