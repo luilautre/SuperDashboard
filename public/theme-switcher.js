@@ -32,7 +32,7 @@ themeButton.addEventListener('click', () => {
 });
 
 // Lien de connexion dans accountArea lorsque la session est absente.
-const accountArea = document.querySelector('#accountArea');
+ //const accountArea = document.querySelector('#accountArea'); // déja dans app.js
 function ensureSignInLink() {
   if (!accountArea.querySelector('.sign-in-link')) {
     const link = document.createElement('a');
