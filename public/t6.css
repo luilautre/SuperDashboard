@@ -1,4 +1,4 @@
-/* Thème 6 — Néon cyber. À charger après /styles.css. */
+/* T6 — Terminal cyberpunk : grille, angles carrés, tracés lumineux et monospace. */
 :root {
   color-scheme: dark;
   --app: #100d1c;
@@ -13,34 +13,54 @@
   --accent: #d38bff;
   --accent-strong: #bd68f0;
   --danger: #ff829b;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
-
-.chat-header { background: rgb(16 13 28 / 92%); }
-.integration-panel, .chat-intro, .note-form { background: #19132a; }
-.integration-icon, .chat-avatar, .chat-intro-icon { background: #302047; color: #efcaff; }
+body {
+  background-color: #100d1c;
+  background-image: linear-gradient(#d38bff0b 1px, transparent 1px), linear-gradient(90deg, #d38bff0b 1px, transparent 1px), radial-gradient(ellipse at 70% 20%, #48287535, transparent 42%);
+  background-size: 32px 32px, 32px 32px, auto;
+}
+.sidebar { width: 248px; border-right: 1px solid #d38bff44; background: #0a0813; box-shadow: 8px 0 35px #0005; }
+.workspace { margin-left: 248px; background: transparent; }
+.brand { text-transform: uppercase; letter-spacing: .08em; }
+.brand-mark, .welcome-mark { border: 1px solid #d38bff80; border-radius: 2px; background: #21172f; color: #efcaff; box-shadow: 0 0 18px #d38bff33; }
+.nav-label, .eyebrow { color: #d38bff; }
+.nav-item { border: 1px solid transparent; border-radius: 2px; font-family: inherit; }
+.nav-item:hover, .nav-item.active { border-color: #d38bff70; background: #21172f; color: #f4edff; box-shadow: inset 3px 0 #d38bff, 0 0 14px #d38bff16; }
+.nav-icon { color: #d38bff; }
+.chat-header { border-bottom: 1px solid #d38bff55; background: rgb(16 13 28 / 86%); }
+.chat-avatar, .integration-icon, .chat-intro-icon { border: 1px solid #d38bff75; border-radius: 2px; background: #21172f; color: #efcaff; box-shadow: 0 0 18px #d38bff20; }
+.integration-panel, .chat-intro, .note-form { border: 1px solid #d38bff55; border-radius: 2px; background: rgb(25 19 42 / 94%); box-shadow: 0 0 28px #d38bff12, inset 0 0 25px #d38bff08; }
+.integration-panel { text-align: left; }
+.integration-panel .integration-icon { margin-left: 0; }
+.integration-panel h2 { color: #f4edff; text-transform: uppercase; letter-spacing: .08em; }
 .integration-description { color: #d0c3e3; }
-.integration-status { border-color: #d6b8ff24; background: #ffffff0a; color: #dfd0f2; }
-.result-item { border-color: #d6b8ff20; background: #100d1c; color: #f4edff; }
-.result-item[href]:hover { border-color: #d38bff; background: #21172f; }
+.integration-status { border: 1px solid #d38bff50; border-radius: 2px; background: #241a39; color: #dfd0f2; font-family: inherit; }
+.result-item { border-color: #d6b8ff45; border-radius: 2px; background: #100d1c; color: #f4edff; }
+.result-item[href]:hover { border-color: #d38bff; background: #21172f; box-shadow: 0 0 14px #d38bff20; }
 .result-item span, .integration-details { color: #b3a5cc; }
-.note-item { border-color: #d6b8ff20; background: #39245b; color: #f4edff; }
+.note-item { border: 1px solid #d6b8ff45; border-left: 3px solid #d38bff; border-radius: 2px; background: #21172f; color: #f4edff; }
 .note-meta, .delete-note { color: #ddc5f6; }
-.button-primary { color: #24102f; }
+.note-form input { font-family: inherit; }
+.button-primary { border: 1px solid #e6b9ff; border-radius: 2px; box-shadow: 0 0 16px #d38bff30; color: #24102f; font-family: inherit; text-transform: uppercase; }
 
 @media (max-width: 720px) {
   :root { --app: #f2eafb; --text: #2b1d3d; --muted: #78668f; --line: #2b1d3d1c; }
-  body, .workspace, .app-view { background-color: #f2eafb; }
-  .sidebar, .chat-header { background: #44225f; }
+  body { background: linear-gradient(#7136a010 1px, transparent 1px), linear-gradient(90deg, #7136a010 1px, transparent 1px), #f2eafb; background-size: 24px 24px; }
+  .sidebar { width: 100%; border: 0; background: #44225f; box-shadow: none; }
+  .workspace { margin: 0; background: transparent; }
+  .brand { color: #fff; }
+  .brand-mark { background: #ffffff20; box-shadow: none; }
   .side-nav { background: #fbf8ff; }
   .nav-item { color: #78668f; }
-  .nav-item:hover, .nav-item.active { color: #7136a0; }
+  .nav-item:hover, .nav-item.active { border: 0; background: transparent; color: #7136a0; box-shadow: none; }
+  .chat-header { background: #44225f; }
   .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
   .integration-panel, .result-item, .note-form { background: #fbf8ff; }
   .integration-panel h2 { color: #2b1d3d; }
   .integration-description, .integration-details { color: #655574; }
   .integration-status { background: #efe3fa; color: #633d81; }
-  .chat-intro { background: #eee2f8; color: #78668f; }
-  .chat-intro strong { color: #39234d; }
+  .chat-intro { background: #eee2f8; }
   .note-item { background: #e7d6f5; color: #2b1d3d; }
   .note-meta, .delete-note { color: #655574; }
 }

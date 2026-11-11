@@ -1,4 +1,4 @@
-/* Thème 3 — Forêt profonde. À charger après /styles.css. */
+/* T3 — Console forêt : navigation en ruban, panneau découpé et notes alignées à gauche. */
 :root {
   color-scheme: dark;
   --app: #142019;
@@ -14,32 +14,59 @@
   --accent-strong: #95c65a;
   --danger: #ff9588;
 }
-
-.chat-header { background: rgb(20 32 25 / 92%); }
-.integration-panel, .chat-intro, .note-form { background: #1d2c22; }
-.integration-icon, .chat-avatar, .chat-intro-icon { background: #304837; color: #d7efb2; }
-.integration-description { color: #c2cfba; }
-.integration-status { border-color: #d6efcf1c; background: #ffffff08; color: #d0ddc8; }
-.result-item { background: #142019; color: #edf5e9; }
-.result-item span, .integration-details { color: #a4b49f; }
-.note-item { background: #31563a; color: #f1f7ed; }
+body { background: repeating-linear-gradient(0deg, #142019 0 39px, #ffffff05 40px), #142019; }
+.sidebar { width: 208px; border-right: 4px solid #31563a; background: #0d1711; }
+.workspace { margin-left: 208px; }
+.brand-mark { border-radius: 50%; background: #31563a; color: #d7efb2; }
+.nav-item { border-left: 3px solid transparent; border-radius: 3px; }
+.nav-item.active { border-left-color: var(--accent); background: #203729; color: #d7efb2; }
+.nav-icon { color: var(--accent); }
+.chat-header { border-bottom: 2px solid #31563a; background: #142019; }
+.chat-avatar, .integration-icon, .chat-intro-icon { border: 1px solid #b3dc7a50; border-radius: 6px; background: #304837; color: #d7efb2; }
+.integration-panel {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  grid-template-areas: "icon label" "icon title" "icon desc" "status status" "details details" "action action" "results results";
+  align-items: center;
+  gap: 7px 18px;
+  max-width: 700px;
+  border: 1px solid #b3dc7a35;
+  border-left: 6px solid #95c65a;
+  border-radius: 8px;
+  background: #1d2c22;
+  text-align: left;
+}
+.integration-icon { grid-area: icon; margin: 0; }
+.integration-panel > .eyebrow { grid-area: label; margin: 0; }
+.integration-panel > h2 { grid-area: title; margin: 0; }
+.integration-description { grid-area: desc; margin: 0; color: #c2cfba; }
+.integration-status { grid-area: status; justify-self: start; border-color: #b3dc7a35; background: #26392b; color: #d0ddc8; }
+.integration-details { grid-area: details; margin: 7px 0; color: #a4b49f; }
+.integration-action { grid-area: action; justify-self: start; }
+.integration-results { grid-area: results; width: 100%; }
+.result-item { border-color: #d6efcf20; border-radius: 6px; background: #142019; color: #edf5e9; }
+.note-item { width: 100%; max-width: 740px; align-self: flex-start; border-left: 4px solid #95c65a; border-radius: 4px; background: #203729; color: #f1f7ed; }
+.note-item:nth-child(even) { margin-left: 22px; }
 .note-meta, .delete-note { color: #d2e3ca; }
-.button-primary { color: #1c2b13; }
+.note-form { border-radius: 8px; background: #1d2c22; }
+.button-primary { border-radius: 6px; color: #1c2b13; }
 
 @media (max-width: 720px) {
   :root { --app: #e7eee2; --text: #263a2a; --muted: #71816e; --line: #263a2a1c; }
-  body, .workspace, .app-view { background-color: #e7eee2; }
-  .sidebar, .chat-header { background: #315a3b; }
+  body { background: repeating-linear-gradient(0deg, #e7eee2 0 39px, #263a2a08 40px); }
+  .sidebar { width: 100%; border: 0; background: #315a3b; }
+  .workspace { margin: 0; background: transparent; }
   .side-nav { background: #f8faf5; }
-  .nav-item { color: #71816e; }
+  .nav-item { color: #71816e; border: 0; }
   .nav-item:hover, .nav-item.active { color: #315a3b; }
+  .chat-header { background: #315a3b; }
   .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
-  .integration-panel, .result-item, .note-form { background: #f8faf5; }
+  .app-view { background: transparent; }
+  .integration-panel { grid-template-columns: 52px minmax(0, 1fr); gap: 5px 12px; background: #f8faf5; }
   .integration-panel h2 { color: #263a2a; }
   .integration-description, .integration-details { color: #52654e; }
   .integration-status { background: #e2edd9; color: #315a3b; }
-  .chat-intro { background: #e9efd9; color: #68735b; }
-  .chat-intro strong { color: #36452e; }
-  .note-item { background: #d8e8ce; color: #263a2a; }
+  .result-item, .note-form { background: #f8faf5; }
+  .note-item { width: 95%; margin-left: 0 !important; background: #d8e8ce; color: #263a2a; }
   .note-meta, .delete-note { color: #52654e; }
 }

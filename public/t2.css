@@ -1,4 +1,4 @@
-/* Thème 2 — Lavande claire. À charger après /styles.css. */
+/* T2 — Journal éditorial : typographie sérif, lignes fines et composition imprimée. */
 :root {
   color-scheme: light;
   --app: #f2effa;
@@ -9,40 +9,52 @@
   --surface-user: #e8ddfa;
   --text: #29233a;
   --muted: #746b86;
-  --line: #45365a1c;
+  --line: #45365a2b;
   --accent: #7654bd;
   --accent-strong: #6342a8;
   --danger: #b8324a;
+  font-family: Georgia, "Times New Roman", serif;
 }
-
-body, .workspace { background: var(--app); color: var(--text); }
-.brand, .nav-item, .account-area, .chat-title h1 { color: var(--text); }
-.nav-item:hover, .nav-item.active { background: var(--sidebar-hover); color: #38275e; }
-.nav-icon, .connection-status, .integration-details, .result-item span { color: var(--muted); }
-.chat-header { background: rgb(242 239 250 / 92%); }
-.integration-panel, .chat-intro, .note-form { background: var(--surface); color: var(--text); }
-.integration-icon, .chat-avatar, .chat-intro-icon { background: #e6dcf8; color: #6342a8; }
-.integration-panel h2, .chat-intro strong { color: var(--text); }
+body, .workspace { background: #f2effa; color: var(--text); }
+.sidebar { width: 220px; padding: 28px 18px; border-right: 1px solid var(--line); background: #e6e0f3; }
+.workspace { margin-left: 220px; }
+.brand, .welcome h1, .chat-title h1, .integration-panel h2 { font-family: Georgia, "Times New Roman", serif; }
+.brand { font-size: 1.05rem; }
+.brand-mark, .welcome-mark { border-radius: 2px; background: #29233a; color: #fffaff; }
+.nav-label, .eyebrow { letter-spacing: .18em; }
+.nav-item { min-height: 46px; border-bottom: 1px solid #45365a18; border-radius: 0; font-family: Arial, sans-serif; }
+.nav-item:hover, .nav-item.active { background: transparent; color: #6342a8; }
+.nav-item.active { box-shadow: inset 3px 0 #7654bd; }
+.chat-header { min-height: 84px; border-bottom: 2px solid var(--text); background: #f2effa; }
+.chat-avatar, .integration-icon, .chat-intro-icon { border-radius: 2px; background: #e6dcf8; color: #6342a8; }
+.integration-panel, .chat-intro, .note-form { border: 1px solid var(--line); border-radius: 2px; background: #fffaff; box-shadow: 5px 5px 0 #d9d0eb; }
+.integration-panel { text-align: left; }
+.integration-panel .integration-icon { margin-left: 0; }
+.integration-panel .eyebrow { margin-bottom: 5px; }
+.integration-panel h2 { font-size: 2rem; }
 .integration-description { color: #554c67; }
-.integration-status { border-color: #d8cde9; background: #eee8f8; color: #594580; }
-.result-item { border-color: var(--line); background: #fffaff; color: var(--text); }
-.result-item[href]:hover { border-color: #b9a8da; background: #f6f0ff; }
-.note-item { border-color: #d8cbed; background: var(--surface-user); color: #29233a; }
+.integration-status { border-radius: 2px; background: #eee8f8; color: #594580; }
+.result-item { border-width: 0 0 1px; border-radius: 0; background: transparent; color: var(--text); }
+.result-item[href]:hover { background: #f6f0ff; }
+.note-item { border-radius: 2px; background: #e8ddfa; color: #29233a; }
+.note-item:nth-child(even) { align-self: flex-start; }
 .note-meta, .delete-note { color: #62527f; }
+.button { border-radius: 2px; font-family: Arial, sans-serif; }
 .button-primary { color: #fff; }
-.empty-state, .results-empty { color: var(--muted); }
 
 @media (max-width: 720px) {
   :root { --app: #f2effa; --text: #29233a; --muted: #746b86; --line: #45365a1c; }
-  body, .workspace, .app-view { background-color: #f2effa; }
-  .sidebar, .chat-header { background: #60449a; }
+  .sidebar { width: 100%; padding: 0 14px; border: 0; background: #60449a; }
+  .workspace { margin: 0; background: #f2effa; }
+  .brand { color: #fff; }
+  .brand-mark { background: #ffffff20; }
   .side-nav { background: #fffaff; }
   .nav-item { color: #746b86; }
   .nav-item:hover, .nav-item.active { color: #60449a; }
+  .chat-header { background: #60449a; border: 0; }
   .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
-  .integration-panel, .result-item { background: #fffaff; }
-  .chat-intro { background: #eee7f8; color: #746b86; }
-  .chat-intro strong { color: #29233a; }
-  .note-form { background: #fffaff; }
-  .note-item { background: #e8ddfa; color: #29233a; }
+  .integration-panel, .result-item, .note-form { background: #fffaff; }
+  .integration-panel h2 { color: #29233a; }
+  .integration-description { color: #554c67; }
+  .chat-intro { background: #eee7f8; }
 }

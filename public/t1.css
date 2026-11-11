@@ -1,4 +1,4 @@
-/* Thème 1 — Minuit turquoise. À charger après /styles.css. */
+/* T1 — Verre / interface flottante : profondeur, transparence et grands espaces. */
 :root {
   color-scheme: dark;
   --app: #101b20;
@@ -15,28 +15,48 @@
   --danger: #ff958d;
 }
 
-.chat-header { background: rgb(16 27 32 / 92%); }
-.integration-panel, .chat-intro { background: #17272d; }
-.integration-icon, .chat-avatar, .chat-intro-icon { background: #20474a; color: #b8fff0; }
-.result-item { background: #111f24; color: #e6f4f2; }
-.note-form { background: #17272d; }
-.note-item { color: #e6f4f2; }
-.button-primary { color: #08251f; }
+body {
+  background-image: radial-gradient(ellipse at 75% 15%, #1c566044, transparent 38%), radial-gradient(ellipse at 25% 85%, #20474844, transparent 40%);
+  background-attachment: fixed;
+}
+.sidebar {
+  width: 232px;
+  border-right: 1px solid var(--line);
+  background: rgb(10 20 24 / 78%);
+  backdrop-filter: blur(18px);
+}
+.workspace { margin-left: 232px; background: transparent; }
+.brand-mark, .chat-avatar, .integration-icon, .chat-intro-icon {
+  border: 1px solid #70e0cb35;
+  background: linear-gradient(145deg, #20474a, #142b30);
+  box-shadow: 0 0 22px #70e0cb18;
+}
+.nav-item { border: 1px solid transparent; }
+.nav-item.active { border-color: #70e0cb30; box-shadow: inset 3px 0 var(--accent); }
+.chat-header { background: rgb(16 27 32 / 76%); backdrop-filter: blur(16px); }
+.integration-panel, .chat-intro, .note-form {
+  border-color: #b6e9df2b;
+  background: rgb(23 39 45 / 76%);
+  box-shadow: 0 18px 60px #0005, inset 0 1px #ffffff0a;
+  backdrop-filter: blur(16px);
+}
+.integration-panel { border-radius: 26px; }
+.result-item { border-color: #b6e9df22; background: #111f24cc; }
+.note-item { border: 1px solid #70e0cb30; box-shadow: 0 8px 26px #0003; }
+.button-primary { box-shadow: 0 6px 24px #70e0cb28; color: #08251f; }
 
 @media (max-width: 720px) {
   :root { --app: #e3f0ec; --text: #17352f; --muted: #647d76; --line: #17352f1c; }
-  body, .workspace { background: #e3f0ec; }
-  .sidebar, .chat-header { background: #075e54; }
+  body { background: radial-gradient(ellipse at top, #c4e8db, #e3f0ec 58%); }
+  .sidebar { width: 100%; border: 0; background: #075e54; }
+  .workspace { margin: 0; background: transparent; }
+  .chat-header { background: rgb(7 94 84 / 88%); }
   .side-nav { background: #f7fbf8; }
   .nav-item { color: #617870; }
   .nav-item:hover, .nav-item.active { color: #075e54; }
-  .app-view { background-color: #e3f0ec; }
-  .integration-panel, .result-item { background: #f8fcf9; color: #17352f; }
+  .integration-panel, .chat-intro, .note-form { background: rgb(248 252 249 / 88%); }
   .integration-panel h2 { color: #17352f; }
   .integration-description { color: #4e675f; }
   .integration-status { background: #d7eee5; color: #185b47; }
-  .chat-intro { background: #d5eee3; color: #587168; }
-  .chat-intro strong { color: #244b40; }
-  .note-form { background: #f8fcf9; }
   .note-item { background: #d3ebe2; color: #17352f; }
 }
