@@ -9,7 +9,7 @@
   --surface-user: #e8ddfa;
   --text: #29233a;
   --muted: #746b86;
-  --line: #45365a2b;
+  --line: #45365a1c;
   --accent: #7654bd;
   --accent-strong: #6342a8;
   --danger: #b8324a;
@@ -41,6 +41,11 @@ body, .workspace { background: #f2effa; color: var(--text); }
 .note-meta, .delete-note { color: #62527f; }
 .button { border-radius: 2px; font-family: Arial, sans-serif; }
 .button-primary { color: #fff; }
+.empty-state, .results-empty { color: var(--muted); }
+
+/* Contraste renforcé pour les applications qui ne sont pas sélectionnées. */
+.side-nav .nav-item:not(.active) { color: #51466a; }
+.side-nav .nav-item:not(.active) .nav-icon { color: #625675; }
 
 @media (max-width: 720px) {
   :root { --app: #f2effa; --text: #29233a; --muted: #746b86; --line: #45365a1c; }
@@ -57,13 +62,6 @@ body, .workspace { background: #f2effa; color: var(--text); }
   .integration-panel h2 { color: #29233a; }
   .integration-description { color: #554c67; }
   .chat-intro { background: #eee7f8; }
-}
-
-/* Contraste de la navigation non sélectionnée. */
-.nav-item { color: #51466a; }
-.nav-icon { color: #746b86; }
-
-@media (max-width: 720px) {
-  .nav-item { color: #51466a; }
-  .nav-icon { color: #746b86; }
+  .side-nav .nav-item:not(.active) { color: #51466a; }
+  .side-nav .nav-item:not(.active) .nav-icon { color: #625675; }
 }
