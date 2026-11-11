@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#212121" />
     <title>SuperDashboard</title>
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/theme-switcher.css" />
   </head>
   <body>
     <div class="app-layout">
@@ -20,6 +21,7 @@
           <button class="nav-item" type="button" role="tab" id="tab-notes" aria-selected="false" aria-controls="appView" data-app="notes" tabindex="-1"><span class="nav-icon" aria-hidden="true">▤</span><span>Notes</span></button>
         </nav>
         <div class="sidebar-bottom">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Changer de thème">Thème : t1</button>
           <div id="accountArea" class="account-area" aria-live="polite"></div>
         </div>
       </aside>
@@ -35,5 +37,6 @@
       </main>
     </div>
     <script src="/app.js" defer></script>
+    <script src="/theme-switcher.js" defer></script>
   </body>
 </html>
