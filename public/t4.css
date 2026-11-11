@@ -1,0 +1,65 @@
+/* T4 — Blueprint : plan technique, grille, repères et typographie compacte. */
+:root {
+  color-scheme: light;
+  --app: #e8f0f8;
+  --sidebar: #d3e2ef;
+  --sidebar-hover: #bfd4e6;
+  --surface: #f7fbff;
+  --surface-raised: #e4eef7;
+  --surface-user: #cfe0ef;
+  --text: #172f46;
+  --muted: #4d6982;
+  --line: #183c5b2b;
+  --accent: #1769aa;
+  --accent-strong: #0e548e;
+  --danger: #a92f3b;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+body {
+  background-color: #e8f0f8;
+  background-image: linear-gradient(#1769aa12 1px, transparent 1px), linear-gradient(90deg, #1769aa12 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.sidebar { width: 240px; border-right: 2px solid #1769aa; background: #d3e2ef; }
+.workspace { margin-left: 240px; background: transparent; }
+.brand { text-transform: uppercase; letter-spacing: .06em; }
+.brand-mark, .welcome-mark { border: 2px solid #1769aa; border-radius: 2px; background: #f7fbff; color: #1769aa; }
+.nav-label, .eyebrow { color: #1769aa; letter-spacing: .14em; }
+.nav-item { border: 1px solid transparent; border-radius: 2px; font-family: inherit; }
+.nav-item:hover, .nav-item.active { border-color: #1769aa70; background: #bfd4e6; color: #123b5a; }
+.nav-item.active { box-shadow: inset 3px 0 #1769aa; }
+.nav-icon { color: #1769aa; }
+.chat-header { border-bottom: 2px solid #1769aa; background: #e8f0f8; }
+.chat-avatar, .integration-icon, .chat-intro-icon { border: 1px solid #1769aa; border-radius: 2px; background: #d3e2ef; color: #0e548e; }
+.integration-panel, .chat-intro, .note-form { border: 1px solid #1769aa70; border-radius: 2px; background: #f7fbff; box-shadow: 4px 4px 0 #bfd4e6; }
+.integration-panel { text-align: left; }
+.integration-panel .integration-icon { margin-left: 0; }
+.integration-panel h2 { color: #172f46; text-transform: uppercase; letter-spacing: .04em; }
+.integration-description { color: #34536d; }
+.integration-status { border: 1px solid #1769aa55; border-radius: 2px; background: #e4eef7; color: #174f7a; }
+.result-item { border: 1px solid #1769aa40; border-radius: 2px; background: #edf4fa; color: #172f46; }
+.result-item[href]:hover { border-color: #1769aa; background: #dceaf5; }
+.note-item { border: 1px solid #1769aa55; border-left: 4px solid #1769aa; border-radius: 2px; background: #cfe0ef; color: #172f46; }
+.note-meta, .delete-note { color: #34536d; }
+.note-form input { font-family: inherit; }
+.button-primary { border-radius: 2px; color: #fff; font-family: inherit; }
+
+@media (max-width: 720px) {
+  :root { --app: #e8f0f8; --text: #172f46; --muted: #4d6982; --line: #183c5b2b; }
+  body { background-size: 18px 18px; }
+  .sidebar { width: 100%; border: 0; background: #1769aa; }
+  .workspace { margin: 0; background: transparent; }
+  .brand { color: #fff; }
+  .brand-mark { border-color: #ffffff70; background: #ffffff20; color: #fff; }
+  .side-nav { background: #f7fbff; }
+  .nav-item { color: #34536d; }
+  .nav-item:hover, .nav-item.active { border: 0; background: transparent; color: #0e548e; box-shadow: inset 0 -3px #1769aa; }
+  .chat-header { background: #1769aa; }
+  .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
+  .integration-panel, .result-item, .note-form { background: #f7fbff; }
+  .integration-panel h2 { color: #172f46; }
+  .integration-description, .integration-details { color: #34536d; }
+  .integration-status { background: #e4eef7; color: #174f7a; }
+  .note-item { background: #cfe0ef; color: #172f46; }
+}

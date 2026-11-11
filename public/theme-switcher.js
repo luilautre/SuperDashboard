@@ -1,4 +1,4 @@
-const themeIds = ['t1', 't2', 't3', 't5', 't6'];
+const themeIds = ['t1', 't2', 't3', 't4', 't5', 't6'];
 const themeButton = document.querySelector('#themeToggle');
 const themeStylesheet = document.createElement('link');
 themeStylesheet.rel = 'stylesheet';
@@ -30,3 +30,31 @@ themeButton.addEventListener('click', () => {
   selectedTheme = themeIds[(currentIndex + 1) % themeIds.length];
   applyTheme(selectedTheme);
 });
+
+// Lien de connexion dans accountArea lorsque la session est absente.
+const accountArea = document.querySelector('#accountArea');
+function ensureSignInLink() {
+  if (!accountArea.querySelector('.sign-in-link')) {
+    const link = document.createElement('a');
+    link.className = 'button button-quiet sign-in-link';
+    link.href = '/auth/google';
+    link.textContent = 'Se connecter';
+    accountArea.append(link);
+  }
+}
+
+const accountObserver = new MutationObserver(() => ensureSignInLink());
+fetch('/api/config')
+  .then((response) => {
+    if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+    return response.json();
+  })
+  .then((config) => {
+    if (!config.loggedIn) {
+      accountObserver.observe(accountArea, { childList: true });
+      ensureSignInLink();
+    }
+  })
+  .catch(() => {
+    // L'écran de connexion principal reste disponible si la vérification échoue.
+  });
