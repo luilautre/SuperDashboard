@@ -3,11 +3,11 @@
 [![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 [![GitHub repository](https://img.shields.io/badge/GitHub-luilautre%2FSuperDashboard-181717?logo=github)](https://github.com/luilautre/SuperDashboard)
-![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-application-000000?logo=express&logoColor=white)
-![Google](https://img.shields.io/badge/Google-Gmail%20%26%20Calendar-4285F4?logo=google&logoColor=white)
-![Discord](https://img.shields.io/badge/Discord-OAuth-5865F2?logo=discord&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-database-3FCF8E?logo=supabase&logoColor=white)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)](#)
+[![Express](https://img.shields.io/badge/Express-application-000000?logo=express&logoColor=white)](#)
+[![Google](https://img.shields.io/badge/Google-Gmail%20%26%20Calendar-4285F4?logo=google&logoColor=white)](#)
+[![Discord](https://img.shields.io/badge/Discord-OAuth-5865F2?logo=discord&logoColor=white)](#)
+[![Supabase](https://img.shields.io/badge/Supabase-database-3FCF8E?logo=supabase&logoColor=white)](#)
 
 Application Express locale de dashboard avec connexion Google, lecture des messages Gmail et des prochains événements Google Calendar, connexion Discord pour afficher les serveurs accessibles, et notes privées enregistrées dans Supabase.
 
