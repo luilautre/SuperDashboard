@@ -1,4 +1,4 @@
-/* T5 — Atelier papier : cartes décalées, gros titres et notes façon pense-bête. */
+/* Thème 5 — Pêche et corail. À charger après /styles.css. */
 :root {
   color-scheme: light;
   --app: #fff1e8;
@@ -13,58 +13,46 @@
   --accent: #df7358;
   --accent-strong: #c95843;
   --danger: #b63842;
-  font-family: "Trebuchet MS", Arial, sans-serif;
 }
-body, .workspace { background: #fff1e8; color: var(--text); }
-.sidebar { width: 236px; border-right: 3px dashed #c9826f70; background: #f7dfd1; }
-.workspace { margin-left: 236px; }
-.brand { letter-spacing: .02em; }
-.brand-mark, .welcome-mark { transform: rotate(-6deg); border: 0; border-radius: 12px 4px 12px 4px; background: #df7358; color: white; box-shadow: 4px 4px 0 #f1cabb; }
-.nav-item { border-radius: 12px 4px 12px 4px; }
-.nav-item:hover, .nav-item.active { background: #f1cabb; color: #8b392e; }
-.chat-header { min-height: 76px; background: #fff1e8; }
-.chat-avatar, .integration-icon, .chat-intro-icon { border: 0; border-radius: 15px 5px 15px 5px; background: #f9ded0; color: #a34736; }
-.integration-panel, .chat-intro, .note-form { border: 2px solid #edc3b0; border-radius: 20px 6px 20px 6px; background: #fffaf6; box-shadow: 8px 8px 0 #f1cabb; }
-.integration-panel { transform: rotate(-.5deg); }
-.integration-panel h2 { font-size: 1.8rem; }
+
+body, .workspace { background: var(--app); color: var(--text); }
+.brand, .nav-item, .account-area, .chat-title h1 { color: var(--text); }
+.nav-item:hover, .nav-item.active { background: var(--sidebar-hover); color: #8b392e; }
+.nav-icon, .connection-status, .integration-details, .result-item span { color: var(--muted); }
+.chat-header { background: rgb(255 241 232 / 92%); }
+.integration-panel, .chat-intro, .note-form { background: var(--surface); color: var(--text); }
+.integration-icon, .chat-avatar, .chat-intro-icon { background: #f9ded0; color: #a34736; }
+.integration-panel h2, .chat-intro strong { color: var(--text); }
 .integration-description { color: #76584f; }
-.integration-status { border-radius: 8px 3px 8px 3px; background: #fff0e8; color: #8b4a3c; }
-.result-item { border: 1px solid #edc3b0; border-radius: 12px 4px 12px 4px; background: #fffaf6; color: #402923; }
-.result-item:nth-child(even) { transform: rotate(.4deg); }
-.result-item[href]:hover { background: #fff3ec; }
-.note-item { border: 0; border-radius: 3px 15px 5px 15px; background: #f8d4c3; box-shadow: 3px 5px 0 #edc3b0; color: #402923; }
-.note-item:nth-child(odd) { transform: rotate(-1deg); }
-.note-item:nth-child(even) { align-self: flex-start; transform: rotate(1deg); }
+.integration-status { border-color: #edd0c3; background: #fff0e8; color: #8b4a3c; }
+.result-item { border-color: var(--line); background: #fffaf6; color: var(--text); }
+.result-item[href]:hover { border-color: #e4b4a1; background: #fff3ec; }
+.note-item { border-color: #edc3b0; background: var(--surface-user); color: #402923; }
 .note-meta, .delete-note { color: #80574b; }
-.note-form { box-shadow: 4px 5px 0 #f1cabb; }
-.button-primary { border-radius: 12px 4px 12px 4px; color: #fff; }
+.button-primary { color: #fff; }
+.empty-state, .results-empty { color: var(--muted); }
+
+/* Contraste renforcé pour les applications non sélectionnées. */
+.side-nav .nav-item:not(.active) { color: #704f44; }
+.side-nav .nav-item:not(.active) .nav-icon { color: #80574b; }
 
 @media (max-width: 720px) {
   :root { --app: #fff1e8; --text: #402923; --muted: #8d6e63; --line: #65392a1c; }
   body, .workspace, .app-view { background-color: #fff1e8; }
-  .sidebar { width: 100%; border: 0; background: #a84c3c; }
-  .workspace { margin: 0; }
-  .brand { color: #fff; }
-  .brand-mark { background: #ffffff20; box-shadow: none; }
+  .sidebar, .chat-header { background: #a84c3c; }
   .side-nav { background: #fffaf6; }
   .nav-item { color: #8d6e63; }
   .nav-item:hover, .nav-item.active { color: #a84c3c; }
-  .chat-header { background: #a84c3c; }
   .chat-title h1, .connection-status, .header-count, .header-count span { color: #fff; }
-  .integration-panel { transform: none; background: #fffaf6; }
+  .integration-panel, .result-item, .note-form { background: #fffaf6; }
   .integration-panel h2 { color: #402923; }
   .integration-description, .integration-details { color: #76584f; }
   .integration-status { background: #fbe2d5; color: #8b4a3c; }
-  .result-item { background: #fffaf6; }
-  .result-item:nth-child(even) { transform: none; }
+  .chat-intro { background: #ffead1; color: #806b5c; }
+  .chat-intro strong { color: #5e4034; }
   .note-item { background: #f8d4c3; color: #402923; }
-}
+  .note-meta, .delete-note { color: #80574b; }
 
-/* Contraste de la navigation non sélectionnée. */
-.nav-item { color: #704f44; }
-.nav-icon { color: #8d6e63; }
-
-@media (max-width: 720px) {
-  .nav-item { color: #704f44; }
-  .nav-icon { color: #8d6e63; }
+  .side-nav .nav-item:not(.active) { color: #704f44; }
+  .side-nav .nav-item:not(.active) .nav-icon { color: #80574b; }
 }
