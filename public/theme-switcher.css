@@ -73,3 +73,45 @@
     background: #ffffff18;
   }
 }
+
+/* Les logos non sélectionnés suivent la couleur d’accent du thème actif. */
+.nav-item:not(.active) .nav-icon {
+  color: var(--accent);
+  transition: color 0.16s ease;
+}
+
+.nav-icon svg,
+.chat-avatar svg,
+.integration-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Une fois sélectionnés, les logos reprennent leur couleur de marque. */
+.nav-item.active[data-app="discord"] .nav-icon,
+#appAvatar[data-app="discord"],
+#integrationIcon[data-app="discord"] { color: #5865f2; }
+
+.nav-item.active[data-app="gmail"] .nav-icon,
+#appAvatar[data-app="gmail"],
+#integrationIcon[data-app="gmail"] { color: #ea4335; }
+
+.nav-item.active[data-app="calendar"] .nav-icon,
+#appAvatar[data-app="calendar"],
+#integrationIcon[data-app="calendar"] { color: #4285f4; }
+
+.nav-item.active[data-app="signal"] .nav-icon,
+#appAvatar[data-app="signal"],
+#integrationIcon[data-app="signal"] { color: #3a76f0; }
+
+.nav-item.active[data-app="notes"] .nav-icon,
+#appAvatar[data-app="notes"],
+#integrationIcon[data-app="notes"] { color: var(--accent); }
