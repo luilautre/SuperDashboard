@@ -1,6 +1,7 @@
 # SuperDashboard
 
-[![Licence CC BY-NC-SA 4.0](https://img.shields.io/badge/Licence-CC%20BY--NC--SA%204.0-lightgrey?logo=creativecommons&logoColor=white)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 [![GitHub repository](https://img.shields.io/badge/GitHub-luilautre%2FSuperDashboard-181717?logo=github)](https://github.com/luilautre/SuperDashboard)
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-application-000000?logo=express&logoColor=white)
