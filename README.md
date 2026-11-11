@@ -1,6 +1,7 @@
 # SuperDashboard
 
 [![CC BY-NC-SA 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+© 2026 luilautre
 
 [![GitHub repository](https://img.shields.io/badge/GitHub-luilautre%2FSuperDashboard-181717?logo=github)](https://github.com/luilautre/SuperDashboard)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=nodedotjs&logoColor=white)](#)
