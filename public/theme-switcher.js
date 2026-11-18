@@ -51,8 +51,6 @@ for (const tab of document.querySelectorAll('.nav-item[data-app]')) {
   renderLogo(tab.querySelector('.nav-icon'), tab.dataset.app);
 }
 
-const integrationIcon = document.querySelector('#integrationIcon');
-
 function syncApplicationLogo(element) {
   if (!element) return;
   const selectedTab = document.querySelector('.nav-item.active[data-app]');
