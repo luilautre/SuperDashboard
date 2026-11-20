@@ -18,3 +18,16 @@ create index if not exists notes_google_id_created_at_idx
 
 -- L’application utilise la clé service_role uniquement dans le serveur Express.
 -- Ne jamais placer cette clé dans le JavaScript du navigateur.
+
+
+-- Sessions persistantes : évite de perdre les connexions lors du redémarrage
+-- ou du remplacement d'une instance Vercel.
+create table if not exists public.user_sessions (
+  sid text primary key,
+  sess jsonb not null,
+  expire timestamptz not null
+);
+
+create index if not exists user_sessions_expire_idx
+  on public.user_sessions (expire);
+
