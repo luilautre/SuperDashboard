@@ -108,9 +108,64 @@ async function discordApi(req, endpoint) {
   return data;
 }
 
+// Stockage de sessions durable dans Supabase (indispensable sur Vercel/serverless).
+// En local, si Supabase n'est pas configuré, express-session conserve son store mémoire.
+class SupabaseSessionStore extends session.Store {
+  get(sid, callback) {
+    supabaseRequest('user_sessions', `?sid=eq.${encodeURIComponent(sid)}&select=sess,expire&limit=1`)
+      .then((rows) => {
+        const record = rows && rows[0];
+        if (!record) return callback(null, null);
+        if (new Date(record.expire).getTime() <= Date.now()) {
+          return this.destroy(sid, () => callback(null, null));
+        }
+        return callback(null, record.sess);
+      })
+      .catch(callback);
+  }
+
+  set(sid, sess, callback = () => {}) {
+    const fallbackAge = 30 * 24 * 60 * 60 * 1000;
+    const expires = sess.cookie && sess.cookie.expires
+      ? new Date(sess.cookie.expires)
+      : new Date(Date.now() + (Number(sess.cookie && sess.cookie.maxAge) || fallbackAge));
+
+    if (expires.getTime() <= Date.now()) {
+      return this.destroy(sid, callback);
+    }
+
+    supabaseRequest('user_sessions', '?on_conflict=sid', {
+      method: 'POST',
+      prefer: 'resolution=merge-duplicates,return=minimal',
+      body: { sid, sess, expire: expires.toISOString() }
+    }).then(() => callback(null)).catch(callback);
+  }
+
+  destroy(sid, callback = () => {}) {
+    supabaseRequest('user_sessions', `?sid=eq.${encodeURIComponent(sid)}`, {
+      method: 'DELETE',
+      prefer: 'return=minimal'
+    }).then(() => callback(null)).catch(callback);
+  }
+
+  touch(sid, sess, callback = () => {}) {
+    const fallbackAge = 30 * 24 * 60 * 60 * 1000;
+    const expires = sess.cookie && sess.cookie.expires
+      ? new Date(sess.cookie.expires)
+      : new Date(Date.now() + (Number(sess.cookie && sess.cookie.maxAge) || fallbackAge));
+
+    supabaseRequest('user_sessions', `?sid=eq.${encodeURIComponent(sid)}`, {
+      method: 'PATCH',
+      prefer: 'return=minimal',
+      body: { expire: expires.toISOString() }
+    }).then(() => callback(null)).catch(callback);
+  }
+}
+
 app.set('trust proxy', 1);
 app.use(session({
   name: 'superdashboard.sid',
+  ...(hasSupabaseConfig ? { store: new SupabaseSessionStore() } : {}),
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -118,7 +173,7 @@ app.use(session({
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 7 * 24 * 60 * 60 * 1000
+    maxAge: 30 * 24 * 60 * 60 * 1000
   }
 }));
 app.use(express.json({ limit: '10kb' }));
